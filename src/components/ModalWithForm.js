@@ -1,4 +1,4 @@
-import "./ModalWithForm.css";
+import "../ModalWithForm/ModalWithForm.css";
 const ModalWithForm = ({
 	children,
 	buttonText = "Add Garment",

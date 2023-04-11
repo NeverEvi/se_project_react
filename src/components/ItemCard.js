@@ -1,4 +1,4 @@
-import "./ItemCard.css";
+import "../ItemCard/ItemCard.css";
 const ItemCard = ({ item, onSelectCard }) => {
 	return (
 		<div onClick={() => onSelectCard(item)}>

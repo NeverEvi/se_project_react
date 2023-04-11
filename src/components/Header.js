@@ -1,4 +1,4 @@
-import "./Header.css";
+import "../Header/Header.css";
 
 const Header = ({ onCreateModal, loc }) => {
 	const currentDate = new Date().toLocaleString("default", {
