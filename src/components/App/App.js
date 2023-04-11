@@ -1,16 +1,16 @@
 import "./App.css";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
-import ModalWithForm from "./components/ModalWithForm";
-import ItemModal from "./components/ItemModal";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import ItemModal from "../ItemModal/ItemModal";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
 	getForecastWeather,
 	parseWeatherData,
 	parseLocationData,
-} from "./utils/weatherApi";
+} from "../../utils/weatherApi";
 
 function App() {
 	//const weatherTemp = "175 F";
@@ -25,11 +25,7 @@ function App() {
 	const handleCloseModal = () => {
 		setActiveModal("");
 	};
-	const handleKeyUp = (evt) => {
-		if (evt.key === "Escape") {
-			setActiveModal("");
-		}
-	};
+
 	const handleClickOut = (evt) => {
 		if (evt.currentTarget !== evt.target) return;
 		setActiveModal("");
@@ -39,14 +35,27 @@ function App() {
 		setSelectedCard(card);
 	};
 	useEffect(() => {
-		getForecastWeather().then((data) => {
-			const temperature = parseWeatherData(data);
-			setTemp(temperature);
-			const location = parseLocationData(data);
-			setLocation(location);
-		});
+		getForecastWeather()
+			.then((data) => {
+				const temperature = parseWeatherData(data);
+				setTemp(temperature);
+				const location = parseLocationData(data);
+				setLocation(location);
+			})
+			.catch((data) => {
+				console.error(data);
+			});
 	}, []);
 
+	useEffect(() => {
+		const closeByEscape = (evt) => {
+			if (evt.key === "Escape") {
+				handleCloseModal();
+			}
+		};
+		document.addEventListener("keydown", closeByEscape);
+		return () => document.removeEventListener("keydown", closeByEscape);
+	}, []);
 	return (
 		<div className="app">
 			<Header onCreateModal={handleCreateModal} loc={location} />
@@ -84,7 +93,7 @@ function App() {
 					<p>Select the weather type:</p>
 					<div className="radioGroup">
 						<div>
-							<input type="radio" id="hot" value="hot" checked />
+							<input type="radio" id="hot" value="hot" defaultChecked />
 							<label>Hot</label>
 						</div>
 						<div>
@@ -105,7 +114,6 @@ function App() {
 					onClickout={handleClickOut}
 				/>
 			)}
-			{document.addEventListener("keyup", handleKeyUp)}
 		</div>
 	);
 }

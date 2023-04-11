@@ -1,4 +1,6 @@
-import "../Header/Header.css";
+import "./Header.css";
+import profileLogo from "../../images/Ellipse 18.svg";
+import logo from "../../images/wtwr.svg";
 
 const Header = ({ onCreateModal, loc }) => {
 	const currentDate = new Date().toLocaleString("default", {
@@ -9,7 +11,7 @@ const Header = ({ onCreateModal, loc }) => {
 		<header className="header">
 			<div className="header__logo">
 				<div>
-					<img src={require("../images/wtwr.svg").default} alt="Logo" />
+					<img src={logo} alt="Logo" />
 				</div>
 				<div>{`${currentDate}, ${loc}`}</div>
 			</div>
@@ -27,7 +29,7 @@ const Header = ({ onCreateModal, loc }) => {
 				<div>
 					<img
 						className="header__avatar-logo-image"
-						src={require("../images/Ellipse 18.svg").default}
+						src={profileLogo}
 						alt="Logo"
 					/>
 				</div>

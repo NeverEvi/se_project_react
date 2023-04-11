@@ -24,6 +24,5 @@ export const parseWeatherData = (data) => {
 };
 export const parseLocationData = (data) => {
 	const location = data.name;
-	console.log(location);
 	return location;
 };

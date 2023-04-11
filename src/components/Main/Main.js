@@ -1,7 +1,7 @@
 import "../Main/Main.css";
-import WeatherCard from "./WeatherCard";
-import ItemCard from "./ItemCard";
-import { defaultClothingItems } from "../utils/constants";
+import WeatherCard from "../WeatherCard/WeatherCard";
+import ItemCard from "../ItemCard/ItemCard";
+import { defaultClothingItems } from "../../utils/constants";
 import { useMemo } from "react";
 
 function Main({ weatherTemp, onSelectCard }) {
@@ -26,7 +26,7 @@ function Main({ weatherTemp, onSelectCard }) {
 				Today is {weatherTemp} °F / You may want to wear:
 				<div className="card_items">
 					{filteredCards.map((x) => (
-						<ItemCard item={x} onSelectCard={onSelectCard} />
+						<ItemCard item={x} onSelectCard={onSelectCard} key={x._id} />
 					))}
 				</div>
 			</section>

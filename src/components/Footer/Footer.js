@@ -1,10 +1,9 @@
-import "../Footer/Footer.css";
-
+import "./Footer.css";
 const Footer = () => {
 	return (
 		<footer className="footer">
 			<div>Developed by Kane Cramer</div>
-			<div>2023</div>
+			<div>{new Date().getFullYear()}</div>
 		</footer>
 	);
 };
