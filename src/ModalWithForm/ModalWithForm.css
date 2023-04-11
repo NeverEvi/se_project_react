@@ -1,0 +1,44 @@
+.modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.4);
+	font-family: "Cabinet Grotesk";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+}
+.modal__content {
+	background-color: white;
+	width: 440px;
+	height: 380px;
+	border-radius: 20px;
+	padding: 0 28px 28px 28px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+.submitButton {
+	width: 124px;
+	height: 36px;
+}
+.modal__closeButton-form {
+	background: transparent url(../images/Button/CloseForm.svg) center no-repeat;
+	height: 20px;
+	width: 20px;
+	border: none;
+	position: relative;
+	left: 430px;
+	top: 20px;
+	margin-top: 0;
+	z-index: 2;
+}
+.modal__title {
+	margin-top: 0px;
+}

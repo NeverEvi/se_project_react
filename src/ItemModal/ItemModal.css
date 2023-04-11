@@ -1,0 +1,33 @@
+.modal__closeButton {
+	background: transparent url(../images/Button/Close.svg) center no-repeat;
+	height: 20px;
+	width: 20px;
+	border: none;
+	position: relative;
+	left: 465px;
+	top: 15px;
+	z-index: 2;
+}
+.modal__content-item {
+	background-color: white;
+	width: 498px;
+	height: 610px;
+	border-radius: 20px;
+	border-color: black;
+	border-width: 2px;
+}
+.modal__image {
+	width: 498px;
+	height: 498px;
+	position: relative;
+	bottom: 25px;
+	z-index: 1;
+	border-radius: 10px 10px 0 0;
+}
+
+.modal__info {
+	padding: 0 32px;
+}
+.modal__info-name {
+	padding: 0 0 12px 0;
+}
