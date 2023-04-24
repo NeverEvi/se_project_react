@@ -12,7 +12,11 @@ import nightFog from "../../images/Night/Fog.svg";
 import nightRain from "../../images/Night/Rain.svg";
 import nightSnow from "../../images/Night/Snow.svg";
 import nightStorm from "../../images/Night/Storm.svg";
+import { useContext } from "react";
 //////////////////////////////////////////////////
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+//////////////////////////////////////////////////
+
 const weatherOptions = [
 	{ url: daySun, day: true, type: "Sun" },
 	{
@@ -69,7 +73,8 @@ const weatherOptions = [
 	},
 ];
 
-const WeatherCard = ({ day, type, weatherTemp = "" }) => {
+const WeatherCard = ({ day, type, weatherTemp }) => {
+	const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 	const imgSrc = weatherOptions.filter((i) => {
 		return i.day === day && i.type === type;
 	});
@@ -77,10 +82,12 @@ const WeatherCard = ({ day, type, weatherTemp = "" }) => {
 	const imgSrcType = imgSrc[0].type || "Weather";
 
 	return (
-		<section className="weather" id="weather">
-			<div className="weather_info">{weatherTemp} °F</div>
-			<img src={imgSrcUrl} className="weather_image" alt={imgSrcType} />
-		</section>
+		<CurrentTemperatureUnitContext.Provider value={{ currentTemperatureUnit }}>
+			<section className="weather" id="weather">
+				<div className="weather_info">{`${weatherTemp}`}</div>
+				<img src={imgSrcUrl} className="weather_image" alt={imgSrcType} />
+			</section>
+		</CurrentTemperatureUnitContext.Provider>
 	);
 };
 
