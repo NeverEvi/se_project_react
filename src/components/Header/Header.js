@@ -3,7 +3,7 @@ import profileLogo from "../../images/Ellipse 18.svg";
 import logo from "../../images/wtwr.svg";
 import React from "react";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.js";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = ({ onCreateModal, loc }) => {
 	const currentDate = new Date().toLocaleString("default", {
@@ -14,7 +14,9 @@ const Header = ({ onCreateModal, loc }) => {
 		<header className="header">
 			<div className="header__logo">
 				<div>
-					<img src={logo} alt="Logo" />
+					<Link to="/">
+						<img src={logo} alt="Logo" />
+					</Link>
 				</div>
 				<div>
 					{`${currentDate},`} {loc}
@@ -34,11 +36,7 @@ const Header = ({ onCreateModal, loc }) => {
 					</button>
 				</div>
 				<div>
-					<BrowserRouter>
-						<Link exact to="/profile">
-							Terrence Tegegne
-						</Link>
-					</BrowserRouter>
+					<Link to="/profile">Terrence Tegegne</Link>
 				</div>
 				<div>
 					<img

@@ -66,92 +66,86 @@ function App() {
 		return () => document.removeEventListener("keydown", closeByEscape);
 	}, []);
 	return (
-		<div className="app">
-			<CurrentTemperatureUnitContext.Provider
-				value={{ currentTemperatureUnit, handleToggleSwitch }}
-			>
-				<Header onCreateModal={handleCreateModal} loc={location} />
-				<BrowserRouter>
-					<Route
-						exact
-						path="/"
-						element={
-							<Main
-								weatherTemp={temp}
+		<BrowserRouter>
+			<div className="app">
+				<CurrentTemperatureUnitContext.Provider
+					value={{ currentTemperatureUnit, handleToggleSwitch }}
+				>
+					<Header onCreateModal={handleCreateModal} loc={location} />
+
+					<Route exact path="/">
+						<Main
+							weatherTemp={temp}
+							onSelectCard={handleSelectedCard}
+							clothingItems={defaultClothingItems}
+						/>
+					</Route>
+					<Route exact path="/profile">
+						{defaultClothingItems.length !== 0 && (
+							<Profile
+								cards={defaultClothingItems}
 								onSelectCard={handleSelectedCard}
-								clothingItems={defaultClothingItems}
 							/>
-						}
-					/>
-					<Route
-						exact
-						path="/profile"
-						element={
-							defaultClothingItems.length !== 0 && (
-								<Profile
-									cards={defaultClothingItems}
-									onSelectCard={handleSelectedCard}
+						)}
+					</Route>
+
+					<Footer />
+					{activeModal === "create" && (
+						<ModalWithForm
+							title="New Garment"
+							onClose={handleCloseModal}
+							onClickout={handleClickOut}
+						>
+							<label>
+								Name
+								<br />
+								<input
+									className="inputField"
+									type="text"
+									name="name"
+									minLength="2"
+									maxLength="36"
 								/>
-							)
-						}
-					/>
-				</BrowserRouter>
-				<Footer />
-				{activeModal === "create" && (
-					<ModalWithForm
-						title="New Garment"
-						onClose={handleCloseModal}
-						onClickout={handleClickOut}
-					>
-						<label>
-							Name
+							</label>
 							<br />
-							<input
-								className="inputField"
-								type="text"
-								name="name"
-								minLength="2"
-								maxLength="36"
-							/>
-						</label>
-						<br />
-						<label>
-							Image
-							<br />
-							<input
-								className="inputField"
-								type="url"
-								name="link"
-								minLength="5"
-								maxLength="36"
-							/>
-						</label>
-						<p>Select the weather type:</p>
-						<div className="radioGroup">
-							<div>
-								<input type="radio" id="hot" value="hot" defaultChecked />
-								<label>Hot</label>
+							<label>
+								Image
+								<br />
+								<input
+									className="inputField"
+									type="url"
+									name="link"
+									minLength="5"
+									maxLength="36"
+								/>
+							</label>
+							<p>Select the weather type:</p>
+							<div className="radioGroup">
+								<div>
+									<input type="radio" id="hot" value="hot" defaultChecked />
+									<label>Hot</label>
+								</div>
+								<div>
+									<input type="radio" id="warm" value="warm" />
+									<label>Warm</label>
+								</div>
+								<div>
+									<input type="radio" id="cold" value="cold" />
+									<label>Cold</label>
+								</div>
 							</div>
-							<div>
-								<input type="radio" id="warm" value="warm" />
-								<label>Warm</label>
-							</div>
-							<div>
-								<input type="radio" id="cold" value="cold" />
-								<label>Cold</label>
-							</div>
-						</div>
-					</ModalWithForm>
-				)}
-				{activeModal === "preview" && (
-					<ItemModal
-						selectedCard={selectedCard}
-						onClose={handleCloseModal}
-						onClickout={handleClickOut}
-					/>
-				)}
-			</CurrentTemperatureUnitContext.Provider>
-		</div>
+						</ModalWithForm>
+					)}
+					{activeModal === "preview" && (
+						<ItemModal
+							selectedCard={selectedCard}
+							onClose={handleCloseModal}
+							onClickout={handleClickOut}
+						/>
+					)}
+				</CurrentTemperatureUnitContext.Provider>
+			</div>
+		</BrowserRouter>
 	);
 }
 

@@ -15,6 +15,7 @@ const ToggleSwitch = () => {
 	return (
 		<div>
 			<label>
+				F
 				<input
 					className=""
 					type="checkbox"
@@ -23,6 +24,7 @@ const ToggleSwitch = () => {
 					onChange={handleToggleSwitch}
 					checked={isChecked}
 				/>
+				C
 				<span className="toggle-switch__checkbox toggle-switch__checkbox_state_visible" />
 			</label>
 		</div>
