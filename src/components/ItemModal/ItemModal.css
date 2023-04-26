@@ -29,5 +29,13 @@
 	padding: 0 32px;
 }
 .modal__info-name {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
 	padding: 0 0 12px 0;
+}
+.modal__delete-item {
+	color: red;
+	margin: 0;
 }

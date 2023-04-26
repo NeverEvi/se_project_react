@@ -14,7 +14,10 @@ const ItemModal = ({ selectedCard, onClose, onClickout }) => {
 					className="modal__image"
 				/>
 				<div className="modal__info">
-					<div className="modal__info-name">{selectedCard.name}</div>
+					<div className="modal__info-name">
+						{selectedCard.name}
+						<p className="modal__delete-item">Delete Item</p>
+					</div>
 					<div>Weather type: {selectedCard.weather}</div>
 				</div>
 			</div>
@@ -22,3 +25,4 @@ const ItemModal = ({ selectedCard, onClose, onClickout }) => {
 	);
 };
 export default ItemModal;
+// add functionality to delete button

@@ -42,19 +42,28 @@ function App() {
 			: setCurrentTemperatureUnit("F");
 	};
 
+	//const handleAddItemSubmit = () => {
+	/*call the corresponding methods from weatherApi.js and 
+		update the clothingItems (your name may differ) state 
+		with an extended copy of the current array 
+		using the spread ... operator:
+		
+		setClothingItems([item, ...clothingItems]);*/
+	//};
+
 	useEffect(() => {
 		getForecastWeather(APIkey)
 			.then((data) => {
 				const location = data && data.name;
 				setLocation(location);
-				console.log(data.main.temp);
 				const temperature = parseWeatherData(data);
+
 				setTemp(temperature);
 			})
 			.catch((data) => {
 				console.error(data);
 			});
-	}, []);
+	}, [currentTemperatureUnit]);
 
 	useEffect(() => {
 		const closeByEscape = (evt) => {
@@ -78,6 +87,7 @@ function App() {
 							weatherTemp={temp}
 							onSelectCard={handleSelectedCard}
 							clothingItems={defaultClothingItems}
+							currentTemperatureUnit={currentTemperatureUnit}
 						/>
 					</Route>
 					<Route exact path="/profile">

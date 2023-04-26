@@ -72,9 +72,18 @@ const weatherOptions = [
 		type: "Storm",
 	},
 ];
-
+/*const temps = {
+					F: `${Math.round(temperature)}°F`,
+					C: `${Math.round(((temperature - 32) * 5) / 9)}°C`,
+				};*/
+// console.log(temps.F);
+// console.log(temps.C);
+// currentTemperatureUnit === "F"
+// 	? setTemp(temperature)
+// 	: setTemp(temps.C);
 const WeatherCard = ({ day, type, weatherTemp }) => {
 	const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
 	const imgSrc = weatherOptions.filter((i) => {
 		return i.day === day && i.type === type;
 	});

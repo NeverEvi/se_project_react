@@ -1,5 +1,8 @@
 //
 //https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}
+
+//import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
+
 //
 const latitude = 40.75;
 const longitude = -86.36;
@@ -23,7 +26,7 @@ export const parseWeatherData = (data) => {
 	console.log(data.main.temp);
 	console.log(temperature);
 
-	return Math.ceil(data.main.temp);
+	return temperature;
 };
 
 export const parseLocationData = (data) => {
