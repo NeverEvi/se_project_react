@@ -7,9 +7,8 @@ const ToggleSwitch = () => {
 		CurrentTemperatureUnitContext
 	);
 	const isChecked = currentTemperatureUnit === "C";
-	console.log(currentTemperatureUnit);
 	return (
-		<div>
+		<div className="ToggleSwitch">
 			<input
 				className="ToggleSwitch-checkbox"
 				id={`ToggleSwitch-new`}
@@ -24,6 +23,10 @@ const ToggleSwitch = () => {
 				<span
 					className={`ToggleSwitch-button ToggleSwitch-button-state-visible`}
 				/>
+				<div className="ToggleSwitch-inactive-units">
+					<span>F</span>
+					<span>C</span>
+				</div>
 			</label>
 		</div>
 	);

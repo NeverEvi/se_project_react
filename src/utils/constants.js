@@ -1,3 +1,5 @@
+export const baseUrl =
+	"https://my-json-server.typicode.com/NeverEvi/se_project_react";
 export const defaultClothingItems = [
 	{
 		_id: 0,

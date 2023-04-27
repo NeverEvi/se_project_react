@@ -1,0 +1,27 @@
+.profile-sidebar {
+	width: 26%; /* Set the width of the sidebar */
+	padding-top: 20px;
+	position: absolute;
+	height: 90%;
+	font-family: "Cabinet Grotesk";
+	font-weight: 700;
+}
+.card_items-profile {
+	margin-left: 26%;
+}
+.profile-sidebar-info {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.profile-sidebar-photo {
+	margin-left: 40px;
+	margin-right: 16px;
+}
+.card__section-header {
+	margin-left: 5%;
+}
+.card__section-header-button {
+	color: rgba(0, 0, 0, 0.6);
+	margin-left: 20px;
+}

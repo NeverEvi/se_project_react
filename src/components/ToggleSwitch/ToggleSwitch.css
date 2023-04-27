@@ -1,3 +1,7 @@
+.ToggleSwitch {
+	display: flex;
+	align-items: center;
+}
 .ToggleSwitch-checkbox {
 	height: 0;
 	width: 0;
@@ -5,6 +9,7 @@
 }
 
 .ToggleSwitch-label {
+	content: "";
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -17,9 +22,9 @@
 	position: relative;
 	transition: background-color 0.2s;
 }
-
 .ToggleSwitch-label .ToggleSwitch-button {
 	content: "";
+	color: #000;
 	position: absolute;
 	top: 2px;
 	left: 2px;
@@ -31,6 +36,22 @@
 	box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
 }
 
+.ToggleSwitch-label:after {
+	content: "F";
+	color: white;
+	display: block;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	top: 48%;
+	left: 25%;
+	font-size: 14px;
+	font-family: Verdana, sans-serif;
+}
+input:checked + .ToggleSwitch-label:after {
+	content: "C";
+	left: 75%;
+}
+
 .ToggleSwitch-checkbox:checked + .ToggleSwitch-label .ToggleSwitch-button {
 	left: calc(100% - 2px);
 	transform: translateX(-100%);
@@ -38,4 +59,20 @@
 
 .ToggleSwitch-label:active .ToggleSwitch-button {
 	width: 52px;
+}
+.ToggleSwitch-inactive-units {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	color: grey;
+	font-size: 14px;
+	width: 100%;
+	height: 100%;
+}
+.ToggleSwitch-inactive-units span:first-child {
+	left: 10px;
+}
+.ToggleSwitch-inactive-units span:last-child {
+	right: 2%;
 }

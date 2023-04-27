@@ -1,4 +1,45 @@
-const baseUrl = "http://localhost:3001";
+export default class Api {
+	constructor({ baseUrl, headers }) {
+		this._baseUrl = baseUrl;
+		this._headers = headers;
+	}
+	_getResponse(res) {
+		//wait for response
+		if (res.ok) {
+			return res.json();
+		}
+		return Promise.reject(`Error ${res.status}`);
+	}
+	getAppInfo() {
+		return Promise.all([]);
+	}
+
+	getClothingItems() {
+		//GET clothing items from server
+		return fetch(`${this._baseUrl}/items`, {
+			method: "GET",
+			headers: this._headers,
+		}).then((res) => this._getResponse(res));
+	}
+	addNewClothingItem(name, imageUrl, weather) {
+		//POST clothing item to server
+		return fetch(`${this._baseUrl}/items`, {
+			method: "POST",
+			headers: this._headers,
+			body: JSON.stringify({
+				name,
+				imageUrl,
+				weather,
+			}),
+		}).then((res) => this._getResponse(res));
+	}
+	deleteClothingItem(id) {
+		return fetch(`${this._baseUrl}/items/${id}`, {
+			method: "DELETE",
+			headers: this._headers,
+		}).then((res) => this._getResponse(res));
+	}
+}
 /*
 
 All clothing items should be fetched and placed into the application state. 
@@ -24,3 +65,4 @@ https://my-json-server.typicode.com/ <your-github-username> se_project_react
 Refer to the My JSON Server documentation if you have any issues setting it up.
 
 
+*/

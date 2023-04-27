@@ -23,9 +23,6 @@ export const getForecastWeather = () => {
 export const parseWeatherData = (data) => {
 	const main = data.main;
 	const temperature = main && main.temp;
-	console.log(data.main.temp);
-	console.log(temperature);
-
 	return temperature;
 };
 

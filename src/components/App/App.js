@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import { React, useState, useEffect } from "react";
 import { Route, BrowserRouter } from "react-router-dom";
@@ -13,13 +13,23 @@ import {
 	parseWeatherData,
 	APIkey,
 } from "../../utils/weatherApi";
-import { defaultClothingItems } from "../../utils/constants";
+import { defaultClothingItems, baseUrl } from "../../utils/constants";
+import Api from "../../utils/api";
+const api = new Api({
+	baseUrl: baseUrl,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+console.log(baseUrl);
 function App() {
 	const [activeModal, setActiveModal] = useState("");
 	const [selectedCard, setSelectedCard] = useState({});
 	const [temp, setTemp] = useState(0);
 	const [location, setLocation] = useState("");
 	const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+	//const [clothingItems, setClothingItems] = useState([]);
 
 	const handleCreateModal = () => {
 		setActiveModal("create");
@@ -28,8 +38,10 @@ function App() {
 		setActiveModal("");
 	};
 
-	const handleClickOut = (evt) => {
-		if (evt.currentTarget !== evt.target) return;
+	const handleClickout = (evt) => {
+		if (evt.currentTarget !== evt.target) {
+			return;
+		}
 		setActiveModal("");
 	};
 	const handleSelectedCard = (card) => {
@@ -42,14 +54,32 @@ function App() {
 			: setCurrentTemperatureUnit("F");
 	};
 
-	//const handleAddItemSubmit = () => {
-	/*call the corresponding methods from weatherApi.js and 
+	const handleAddItemSubmit = (data) => {
+		/*call the corresponding methods from weatherApi.js and 
 		update the clothingItems (your name may differ) state 
 		with an extended copy of the current array 
 		using the spread ... operator:
 		
 		setClothingItems([item, ...clothingItems]);*/
-	//};
+		console.log(data);
+		console.log(data.garmentName);
+		console.log(data.garmentPhotoURL);
+		console.log(data.garmentWeather);
+		let name = data.garmentName;
+		let imageUrl = data.garmentPhotoURL;
+		let weather = data.garmentWeather;
+		api
+			.addNewClothingItem(
+				(name = { name }),
+				(imageUrl = { imageUrl }),
+				(weather = { weather })
+			)
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => console.error(err));
+		handleCloseModal();
+	};
 
 	useEffect(() => {
 		getForecastWeather(APIkey)
@@ -95,62 +125,25 @@ function App() {
 							<Profile
 								cards={defaultClothingItems}
 								onSelectCard={handleSelectedCard}
+								onCreateModal={handleCreateModal}
+								onClickout={handleClickout}
 							/>
 						)}
 					</Route>
 
 					<Footer />
 					{activeModal === "create" && (
-						<ModalWithForm
-							title="New Garment"
-							onClose={handleCloseModal}
-							onClickout={handleClickOut}
-						>
-							<label>
-								Name
-								<br />
-								<input
-									className="inputField"
-									type="text"
-									name="name"
-									minLength="2"
-									maxLength="36"
-								/>
-							</label>
-							<br />
-							<label>
-								Image
-								<br />
-								<input
-									className="inputField"
-									type="url"
-									name="link"
-									minLength="5"
-									maxLength="36"
-								/>
-							</label>
-							<p>Select the weather type:</p>
-							<div className="radioGroup">
-								<div>
-									<input type="radio" id="hot" value="hot" defaultChecked />
-									<label>Hot</label>
-								</div>
-								<div>
-									<input type="radio" id="warm" value="warm" />
-									<label>Warm</label>
-								</div>
-								<div>
-									<input type="radio" id="cold" value="cold" />
-									<label>Cold</label>
-								</div>
-							</div>
-						</ModalWithForm>
+						<AddItemModal
+							onCloseModal={handleCloseModal}
+							onClickout={handleClickout}
+							onAddItem={handleAddItemSubmit}
+						></AddItemModal>
 					)}
 					{activeModal === "preview" && (
 						<ItemModal
 							selectedCard={selectedCard}
 							onClose={handleCloseModal}
-							onClickout={handleClickOut}
+							onClickout={handleClickout}
 						/>
 					)}
 				</CurrentTemperatureUnitContext.Provider>

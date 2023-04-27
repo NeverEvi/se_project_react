@@ -10,12 +10,11 @@ function Main({
 	currentTemperatureUnit,
 }) {
 	const weatherType = useMemo(() => {
-		console.log(weatherTemp);
-		if (weatherTemp >= 86) {
+		if (weatherTemp >= 80) {
 			return "hot";
-		} else if (weatherTemp >= 66 && weatherTemp <= 85) {
+		} else if (weatherTemp >= 55 && weatherTemp <= 80) {
 			return "warm";
-		} else if (weatherTemp <= 65) {
+		} else if (weatherTemp <= 55) {
 			return "cold";
 		}
 	}, [weatherTemp]);
@@ -24,8 +23,6 @@ function Main({
 		C: `${Math.round(((weatherTemp - 32) * 5) / 9)}°C`,
 	};
 	const filteredCards = clothingItems.filter((item) => {
-		//console.log(item);
-		//console.log(weatherType);
 		return item.weather.toLowerCase() === weatherType;
 	});
 	return (
