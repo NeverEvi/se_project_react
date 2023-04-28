@@ -23,7 +23,7 @@ function Main({
 		C: `${Math.round(((weatherTemp - 32) * 5) / 9)}°C`,
 	};
 	const filteredCards = clothingItems.filter((item) => {
-		return item.weather.toLowerCase() === weatherType;
+		return item.weather === weatherType;
 	});
 	return (
 		<main className="main">
@@ -35,8 +35,9 @@ function Main({
 			<section className="card_section" id="card-section">
 				<p>Today is {temps[currentTemperatureUnit]} / You may want to wear: </p>
 				<div className="card_items">
+					{console.log(clothingItems)}
 					{filteredCards.map((x) => (
-						<ItemCard item={x} onSelectCard={onSelectCard} key={x._id} />
+						<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
 					))}
 				</div>
 			</section>

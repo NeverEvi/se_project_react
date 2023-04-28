@@ -1,8 +1,5 @@
 //
 //https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}
-
-//import { CurrentTemperatureUnitContext } from "../contexts/CurrentTemperatureUnitContext";
-
 //
 const latitude = 40.75;
 const longitude = -86.36;

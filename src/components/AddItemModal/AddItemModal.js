@@ -19,7 +19,6 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 	// create onChange handlers corresponding to each state variable
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log("You clicked submit.");
 		// prevent default behavior
 		onAddItem({ garmentName, garmentPhotoURL, garmentWeather });
 		// call onAddItem with appropriate arguments

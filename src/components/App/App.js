@@ -5,6 +5,7 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
+//import ItemCard from "../ItemCard/ItemCard";
 import { React, useState, useEffect } from "react";
 import { Route, BrowserRouter } from "react-router-dom";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
@@ -13,15 +14,7 @@ import {
 	parseWeatherData,
 	APIkey,
 } from "../../utils/weatherApi";
-import { defaultClothingItems, baseUrl } from "../../utils/constants";
-import Api from "../../utils/api";
-const api = new Api({
-	baseUrl: baseUrl,
-	headers: {
-		"Content-Type": "application/json",
-	},
-});
-console.log(baseUrl);
+import { getItems, setItems, removeItems } from "../../utils/api";
 function App() {
 	const [activeModal, setActiveModal] = useState("");
 	const [selectedCard, setSelectedCard] = useState({});
@@ -29,7 +22,7 @@ function App() {
 	const [location, setLocation] = useState("");
 	const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-	//const [clothingItems, setClothingItems] = useState([]);
+	const [clothingItems, setClothingItems] = useState([]);
 
 	const handleCreateModal = () => {
 		setActiveModal("create");
@@ -45,6 +38,7 @@ function App() {
 		setActiveModal("");
 	};
 	const handleSelectedCard = (card) => {
+		console.log(card);
 		setActiveModal("preview");
 		setSelectedCard(card);
 	};
@@ -53,29 +47,27 @@ function App() {
 			? setCurrentTemperatureUnit("C")
 			: setCurrentTemperatureUnit("F");
 	};
-
+	// const setClothingItems = () => {
+	//
+	// };
 	const handleAddItemSubmit = (data) => {
-		/*call the corresponding methods from weatherApi.js and 
-		update the clothingItems (your name may differ) state 
-		with an extended copy of the current array 
-		using the spread ... operator:
-		
-		setClothingItems([item, ...clothingItems]);*/
-		console.log(data);
-		console.log(data.garmentName);
-		console.log(data.garmentPhotoURL);
-		console.log(data.garmentWeather);
 		let name = data.garmentName;
 		let imageUrl = data.garmentPhotoURL;
 		let weather = data.garmentWeather;
-		api
-			.addNewClothingItem(
-				(name = { name }),
-				(imageUrl = { imageUrl }),
-				(weather = { weather })
-			)
+		setItems({ name, imageUrl, weather })
 			.then((res) => {
-				console.log(res);
+				setClothingItems([res, ...clothingItems]);
+			})
+			.catch((err) => console.error(err));
+		handleCloseModal();
+	};
+	const handleDeleteItem = (e) => {
+		console.log(e.target.id);
+		removeItems(e.target.id)
+			.then(() => {
+				getItems().then((data) => {
+					setClothingItems(data);
+				});
 			})
 			.catch((err) => console.error(err));
 		handleCloseModal();
@@ -94,6 +86,11 @@ function App() {
 				console.error(data);
 			});
 	}, [currentTemperatureUnit]);
+	useEffect(() => {
+		getItems().then((data) => {
+			setClothingItems(data);
+		});
+	}, []);
 
 	useEffect(() => {
 		const closeByEscape = (evt) => {
@@ -116,19 +113,17 @@ function App() {
 						<Main
 							weatherTemp={temp}
 							onSelectCard={handleSelectedCard}
-							clothingItems={defaultClothingItems}
+							clothingItems={clothingItems}
 							currentTemperatureUnit={currentTemperatureUnit}
 						/>
 					</Route>
 					<Route exact path="/profile">
-						{defaultClothingItems.length !== 0 && (
-							<Profile
-								cards={defaultClothingItems}
-								onSelectCard={handleSelectedCard}
-								onCreateModal={handleCreateModal}
-								onClickout={handleClickout}
-							/>
-						)}
+						<Profile
+							cards={clothingItems}
+							onSelectCard={handleSelectedCard}
+							onCreateModal={handleCreateModal}
+							onClickout={handleClickout}
+						/>
 					</Route>
 
 					<Footer />
@@ -144,6 +139,7 @@ function App() {
 							selectedCard={selectedCard}
 							onClose={handleCloseModal}
 							onClickout={handleClickout}
+							onDelete={handleDeleteItem}
 						/>
 					)}
 				</CurrentTemperatureUnitContext.Provider>

@@ -1,45 +1,55 @@
-export default class Api {
-	constructor({ baseUrl, headers }) {
-		this._baseUrl = baseUrl;
-		this._headers = headers;
-	}
-	_getResponse(res) {
-		//wait for response
+const baseUrl = "https://my-json-server.typicode.com/NeverEvi/se_project_react";
+//"http://localhost:3001";
+
+export const getItems = () => {
+	const itemsApi = fetch(`${baseUrl}/items`).then((res) => {
 		if (res.ok) {
 			return res.json();
+		} else {
+			return Promise.reject(`Error: ${res.status}`);
 		}
-		return Promise.reject(`Error ${res.status}`);
-	}
-	getAppInfo() {
-		return Promise.all([]);
-	}
+	});
+	return itemsApi;
+};
+export const setItems = ({ name, imageUrl, weather }) => {
+	const newItem = fetch(`${baseUrl}/items`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			name,
+			imageUrl,
+			weather,
+		}),
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		} else {
+			return Promise.reject(`Error: ${res.status}`);
+		}
+	});
+	return newItem;
+};
+export const removeItems = (id) => {
+	const removed = fetch(`${baseUrl}/items/${id}`, {
+		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		} else {
+			return Promise.reject(`Error: ${res.status}`);
+		}
+	});
+	return removed;
+};
+// 	remove: (id) => {
+// 		return fetch(`${this._baseUrl}/items/${id}`, {
+// 			method: "DELETE",
+// 			headers: this._headers,
+// 		}).then((res) => this._getResponse(res));
+// 	},
+// };
 
-	getClothingItems() {
-		//GET clothing items from server
-		return fetch(`${this._baseUrl}/items`, {
-			method: "GET",
-			headers: this._headers,
-		}).then((res) => this._getResponse(res));
-	}
-	addNewClothingItem(name, imageUrl, weather) {
-		//POST clothing item to server
-		return fetch(`${this._baseUrl}/items`, {
-			method: "POST",
-			headers: this._headers,
-			body: JSON.stringify({
-				name,
-				imageUrl,
-				weather,
-			}),
-		}).then((res) => this._getResponse(res));
-	}
-	deleteClothingItem(id) {
-		return fetch(`${this._baseUrl}/items/${id}`, {
-			method: "DELETE",
-			headers: this._headers,
-		}).then((res) => this._getResponse(res));
-	}
-}
 /*
 
 All clothing items should be fetched and placed into the application state. 

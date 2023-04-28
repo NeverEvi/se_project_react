@@ -3,11 +3,8 @@ import { React } from "react";
 //import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import SideBar from "../SideBar/SideBar";
-import { defaultClothingItems } from "../../utils/constants";
 
-//import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-
-function Profile({ onSelectCard, onCreateModal }) {
+function Profile({ cards, onSelectCard, onCreateModal }) {
 	return (
 		<div className="profile">
 			<SideBar />
@@ -25,8 +22,8 @@ function Profile({ onSelectCard, onCreateModal }) {
 						</button>
 					</div>
 					<div className="card_items ">
-						{defaultClothingItems.map((x) => (
-							<ItemCard item={x} onSelectCard={onSelectCard} key={x._id} />
+						{cards.map((x) => (
+							<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
 						))}
 					</div>
 				</section>
