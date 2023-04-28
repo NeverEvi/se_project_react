@@ -1,8 +1,7 @@
 import "./Profile.css";
 import { React } from "react";
-//import WeatherCard from "../WeatherCard/WeatherCard";
-import ItemCard from "../ItemCard/ItemCard";
 import SideBar from "../SideBar/SideBar";
+import ClothesSection from "../ClothesSection/ClothesSection";
 
 function Profile({ cards, onSelectCard, onCreateModal }) {
 	return (
@@ -21,11 +20,7 @@ function Profile({ cards, onSelectCard, onCreateModal }) {
 							+ Add new
 						</button>
 					</div>
-					<div className="card_items ">
-						{cards.map((x) => (
-							<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
-						))}
-					</div>
+					<ClothesSection cards={cards} onSelectCard={onSelectCard} />
 				</section>
 			</div>
 		</div>

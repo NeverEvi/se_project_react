@@ -38,7 +38,6 @@ function App() {
 		setActiveModal("");
 	};
 	const handleSelectedCard = (card) => {
-		console.log(card);
 		setActiveModal("preview");
 		setSelectedCard(card);
 	};
@@ -62,7 +61,6 @@ function App() {
 		handleCloseModal();
 	};
 	const handleDeleteItem = (e) => {
-		console.log(e.target.id);
 		removeItems(e.target.id)
 			.then(() => {
 				getItems().then((data) => {

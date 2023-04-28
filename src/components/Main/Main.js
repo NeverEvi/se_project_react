@@ -1,7 +1,7 @@
 import "./Main.css";
 import { React, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
-import ItemCard from "../ItemCard/ItemCard";
+import ClothesSection from "../ClothesSection/ClothesSection";
 
 function Main({
 	weatherTemp,
@@ -34,12 +34,7 @@ function Main({
 			/>
 			<section className="card_section" id="card-section">
 				<p>Today is {temps[currentTemperatureUnit]} / You may want to wear: </p>
-				<div className="card_items">
-					{console.log(clothingItems)}
-					{filteredCards.map((x) => (
-						<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
-					))}
-				</div>
+				<ClothesSection cards={filteredCards} onSelectCard={onSelectCard} />
 			</section>
 		</main>
 	);
