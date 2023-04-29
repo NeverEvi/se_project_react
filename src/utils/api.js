@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001"; //"https://my-json-server.typicode.com/NeverEvi/se_project_react";
+const baseUrl = "https://my-json-server.typicode.com/NeverEvi/se_project_react"; //"http://localhost:3001";
 
 export const getItems = () => {
 	const itemsApi = fetch(`${baseUrl}/items`).then((res) => {

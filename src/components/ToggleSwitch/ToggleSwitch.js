@@ -9,7 +9,7 @@ const ToggleSwitch = () => {
 	const isChecked = currentTemperatureUnit === "C";
 	return (
 		<CurrentTemperatureUnitContext.Provider
-			value={{ currentTemperatureUnit, handleToggleSwitchChangeChange }}
+			value={{ currentTemperatureUnit, handleToggleSwitchChange }}
 		>
 			<div className="ToggleSwitch">
 				<input
