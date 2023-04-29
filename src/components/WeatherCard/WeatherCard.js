@@ -73,7 +73,9 @@ const weatherOptions = [
 	},
 ];
 const WeatherCard = ({ day, type, weatherTemp }) => {
-	const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+	const { currentTemperatureUnit, handleToggleSwitch } = useContext(
+		CurrentTemperatureUnitContext
+	);
 
 	const imgSrc = weatherOptions.filter((i) => {
 		return i.day === day && i.type === type;
@@ -82,7 +84,9 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
 	const imgSrcType = imgSrc[0].type || "Weather";
 
 	return (
-		<CurrentTemperatureUnitContext.Provider value={{ currentTemperatureUnit }}>
+		<CurrentTemperatureUnitContext.Provider
+			value={{ currentTemperatureUnit, handleToggleSwitch }}
+		>
 			<section className="weather" id="weather">
 				<div className="weather_info">{`${weatherTemp}`}</div>
 				<img src={imgSrcUrl} className="weather_image" alt={imgSrcType} />
