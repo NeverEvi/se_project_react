@@ -3,13 +3,13 @@ import "./ToggleSwitch.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 const ToggleSwitch = () => {
-	const { currentTemperatureUnit, handleToggleSwitch } = useContext(
+	const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
 		CurrentTemperatureUnitContext
 	);
 	const isChecked = currentTemperatureUnit === "C";
 	return (
 		<CurrentTemperatureUnitContext.Provider
-			value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+			value={{ currentTemperatureUnit, handleToggleSwitchChangeChange }}
 		>
 			<div className="ToggleSwitch">
 				<input
@@ -18,7 +18,7 @@ const ToggleSwitch = () => {
 					type="checkbox"
 					name="ToggleSwitch-checkbox"
 					value={currentTemperatureUnit}
-					onChange={handleToggleSwitch}
+					onChange={handleToggleSwitchChange}
 					checked={isChecked}
 				/>
 

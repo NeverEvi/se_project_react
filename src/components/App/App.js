@@ -41,7 +41,7 @@ function App() {
 		setActiveModal("preview");
 		setSelectedCard(card);
 	};
-	const handleToggleSwitch = () => {
+	const handleToggleSwitchChange = () => {
 		currentTemperatureUnit === "F"
 			? setCurrentTemperatureUnit("C")
 			: setCurrentTemperatureUnit("F");
@@ -103,7 +103,7 @@ function App() {
 		<BrowserRouter>
 			<div className="app">
 				<CurrentTemperatureUnitContext.Provider
-					value={{ currentTemperatureUnit, handleToggleSwitch }}
+					value={{ currentTemperatureUnit, handleToggleSwitchChange }}
 				>
 					<Header onCreateModal={handleCreateModal} loc={location} />
 

@@ -7,7 +7,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherTemp, onSelectCard, clothingItems }) {
-	const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
+	const { currentTemperatureUnit, handleToggleSwitchChangeChange } = useContext(
 		CurrentTemperatureUnitContext
 	);
 	const weatherType = useMemo(() => {
@@ -29,7 +29,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
 	return (
 		<main className="main">
 			<CurrentTemperatureUnitContext.Provider
-				value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+				value={{ currentTemperatureUnit, handleToggleSwitchChangeChange }}
 			>
 				<WeatherCard
 					day={true}

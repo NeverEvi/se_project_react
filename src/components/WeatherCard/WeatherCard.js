@@ -73,7 +73,7 @@ const weatherOptions = [
 	},
 ];
 const WeatherCard = ({ day, type, weatherTemp }) => {
-	const { currentTemperatureUnit, handleToggleSwitch } = useContext(
+	const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
 		CurrentTemperatureUnitContext
 	);
 
@@ -85,7 +85,7 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
 
 	return (
 		<CurrentTemperatureUnitContext.Provider
-			value={{ currentTemperatureUnit, handleToggleSwitch }}
+			value={{ currentTemperatureUnit, handleToggleSwitchChange }}
 		>
 			<section className="weather" id="weather">
 				<div className="weather_info">{`${weatherTemp}`}</div>
