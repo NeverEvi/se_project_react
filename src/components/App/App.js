@@ -112,7 +112,6 @@ function App() {
 							weatherTemp={temp}
 							onSelectCard={handleSelectedCard}
 							clothingItems={clothingItems}
-							currentTemperatureUnit={currentTemperatureUnit}
 						/>
 					</Route>
 					<Route exact path="/profile">
