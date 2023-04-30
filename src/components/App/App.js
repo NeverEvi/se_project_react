@@ -46,9 +46,6 @@ function App() {
 			? setCurrentTemperatureUnit("C")
 			: setCurrentTemperatureUnit("F");
 	};
-	// const setClothingItems = () => {
-	//
-	// };
 	const handleAddItemSubmit = (data) => {
 		let name = data.garmentName;
 		let imageUrl = data.garmentPhotoURL;

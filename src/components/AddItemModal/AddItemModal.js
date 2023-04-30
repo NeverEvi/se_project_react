@@ -9,6 +9,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 	// declare state for each input field
 	// use a useEffect hook to reset the input field state to empty strings when
 	// the modal is opened
+
 	useEffect(() => {
 		if (isOpen === true) {
 			setGarmentName("");
