@@ -14,6 +14,7 @@ import nightSnow from "../../images/Night/Snow.svg";
 import nightStorm from "../../images/Night/Storm.svg";
 
 //////////////////////////////////////////////////
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 const weatherOptions = [
 	{ url: daySun, day: true, type: "Sun" },
