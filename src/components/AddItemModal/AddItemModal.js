@@ -53,7 +53,7 @@ const AddItemModal = ({
 					minLength="2"
 					maxLength="36"
 					onChange={handleGarmentName}
-					//value="name"
+					value={garmentName}
 				/>
 			</label>
 			<br />
@@ -66,7 +66,7 @@ const AddItemModal = ({
 					name="link"
 					minLength="5"
 					onChange={handleGarmentPhotoURL}
-					//value={}
+					value={garmentPhotoURL}
 				/>
 			</label>
 			<p>Select the weather type:</p>
