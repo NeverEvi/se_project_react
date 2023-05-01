@@ -2,13 +2,16 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 import { useEffect } from "react";
 // onAddItem refers to handleAddItemSubmit, which is declared in App.js
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
+const AddItemModal = ({
+	isOpen,
+	onAddItem,
+	onCloseModal,
+	onClickout,
+	isLoading,
+}) => {
 	const [garmentName, setGarmentName] = useState("");
 	const [garmentPhotoURL, setGarmentPhotoURL] = useState("");
 	const [garmentWeather, setGarmentWeather] = useState("hot");
-	// declare state for each input field
-	// use a useEffect hook to reset the input field state to empty strings when
-	// the modal is opened
 
 	useEffect(() => {
 		if (isOpen === true) {
@@ -17,12 +20,9 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 			setGarmentWeather("hot");
 		}
 	}, [isOpen]);
-	// create onChange handlers corresponding to each state variable
 	function handleSubmit(e) {
 		e.preventDefault();
-		// prevent default behavior
 		onAddItem({ garmentName, garmentPhotoURL, garmentWeather });
-		// call onAddItem with appropriate arguments
 	}
 	const handleGarmentName = (data) => {
 		setGarmentName(data.target.value);
@@ -41,6 +41,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 			onClose={onCloseModal}
 			onClickout={onClickout}
 			handleSubmit={handleSubmit}
+			isLoading={isLoading}
 		>
 			<label>
 				Name
@@ -52,6 +53,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 					minLength="2"
 					maxLength="36"
 					onChange={handleGarmentName}
+					//value="name"
 				/>
 			</label>
 			<br />
@@ -64,6 +66,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, onClickout }) => {
 					name="link"
 					minLength="5"
 					onChange={handleGarmentPhotoURL}
+					//value={}
 				/>
 			</label>
 			<p>Select the weather type:</p>

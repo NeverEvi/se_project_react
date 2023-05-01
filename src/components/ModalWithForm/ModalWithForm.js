@@ -7,6 +7,7 @@ const ModalWithForm = ({
 	onClickout,
 	name,
 	handleSubmit,
+	isLoading,
 }) => {
 	return (
 		<div className={`modal modal_type_${name}`} onClick={onClickout}>
@@ -20,7 +21,7 @@ const ModalWithForm = ({
 				<form onSubmit={handleSubmit}>
 					{children}
 					<button type="submit" className="submitButton">
-						{buttonText}
+						{isLoading ? "Saving" : buttonText}
 					</button>
 				</form>
 			</div>

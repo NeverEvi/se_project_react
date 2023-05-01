@@ -8,31 +8,27 @@ const ToggleSwitch = () => {
 	);
 	const isChecked = currentTemperatureUnit === "C";
 	return (
-		<CurrentTemperatureUnitContext.Provider
-			value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-		>
-			<div className="ToggleSwitch">
-				<input
-					className="ToggleSwitch-checkbox"
-					id={`ToggleSwitch-new`}
-					type="checkbox"
-					name="ToggleSwitch-checkbox"
-					value={currentTemperatureUnit}
-					onChange={handleToggleSwitchChange}
-					checked={isChecked}
-				/>
+		<div className="ToggleSwitch">
+			<input
+				className="ToggleSwitch-checkbox"
+				id={`ToggleSwitch-new`}
+				type="checkbox"
+				name="ToggleSwitch-checkbox"
+				value={currentTemperatureUnit}
+				onChange={handleToggleSwitchChange}
+				checked={isChecked}
+			/>
 
-				<label className="ToggleSwitch-label" htmlFor={`ToggleSwitch-new`}>
-					<span
-						className={`ToggleSwitch-button ToggleSwitch-button-state-visible`}
-					/>
-					<div className="ToggleSwitch-inactive-units">
-						<span>F</span>
-						<span>C</span>
-					</div>
-				</label>
-			</div>
-		</CurrentTemperatureUnitContext.Provider>
+			<label className="ToggleSwitch-label" htmlFor={`ToggleSwitch-new`}>
+				<span
+					className={`ToggleSwitch-button ToggleSwitch-button-state-visible`}
+				/>
+				<div className="ToggleSwitch-inactive-units">
+					<span>F</span>
+					<span>C</span>
+				</div>
+			</label>
+		</div>
 	);
 };
 export default ToggleSwitch;

@@ -1,7 +1,7 @@
 import "./ItemCard.css";
 const ItemCard = ({ item, onSelectCard }) => {
 	return (
-		<div onClick={() => onSelectCard(item)}>
+		<div>
 			<div>
 				<img
 					src={item.imageUrl}

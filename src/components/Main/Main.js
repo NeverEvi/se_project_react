@@ -2,14 +2,14 @@ import "./Main.css";
 import { React, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import { useContext } from "react";
 import ItemCard from "../ItemCard/ItemCard";
-import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherTemp, onSelectCard, clothingItems }) {
-	const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
-		CurrentTemperatureUnitContext
-	);
+function Main({
+	weatherTemp,
+	onSelectCard,
+	clothingItems,
+	currentTemperatureUnit,
+}) {
 	const weatherType = useMemo(() => {
 		if (weatherTemp >= 80) {
 			return "hot";
@@ -28,25 +28,19 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
 	});
 	return (
 		<main className="main">
-			<CurrentTemperatureUnitContext.Provider
-				value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-			>
-				<WeatherCard
-					day={true}
-					type="Storm"
-					weatherTemp={temps[currentTemperatureUnit]}
-				/>
-				<section className="card_section" id="card-section">
-					<p>
-						Today is {temps[currentTemperatureUnit]} / You may want to wear:{" "}
-					</p>
-					<ClothesSection>
-						{filteredCards.map((x) => (
-							<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
-						))}
-					</ClothesSection>
-				</section>
-			</CurrentTemperatureUnitContext.Provider>
+			<WeatherCard
+				day={true}
+				type="Storm"
+				weatherTemp={temps[currentTemperatureUnit]}
+			/>
+			<section className="card_section" id="card-section">
+				<p>Today is {temps[currentTemperatureUnit]} / You may want to wear: </p>
+				<ClothesSection>
+					{filteredCards.map((x) => (
+						<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
+					))}
+				</ClothesSection>
+			</section>
 		</main>
 	);
 }

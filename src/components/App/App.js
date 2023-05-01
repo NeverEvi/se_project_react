@@ -21,6 +21,7 @@ function App() {
 	const [temp, setTemp] = useState(0);
 	const [location, setLocation] = useState("");
 	const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const [clothingItems, setClothingItems] = useState([]);
 
@@ -47,25 +48,31 @@ function App() {
 			: setCurrentTemperatureUnit("F");
 	};
 	const handleAddItemSubmit = (data) => {
-		let name = data.garmentName;
-		let imageUrl = data.garmentPhotoURL;
-		let weather = data.garmentWeather;
+		const name = data.garmentName;
+		const imageUrl = data.garmentPhotoURL;
+		const weather = data.garmentWeather;
+		setIsLoading(true);
 		setItems({ name, imageUrl, weather })
 			.then((res) => {
 				setClothingItems([res, ...clothingItems]);
+				handleCloseModal();
 			})
-			.catch((err) => console.error(err));
-		handleCloseModal();
+			.catch((err) => console.error(err))
+			.finally(() => setIsLoading(false));
 	};
 	const handleDeleteItem = (e) => {
+		console.log(e.target.id);
 		removeItems(e.target.id)
 			.then(() => {
-				getItems().then((data) => {
-					setClothingItems(data);
+				const newItemList = clothingItems.filter((item) => {
+					console.log(item.id);
+					return item.id != e.target.id;
 				});
+				console.log(newItemList);
+				setClothingItems(newItemList);
+				handleCloseModal();
 			})
 			.catch((err) => console.error(err));
-		handleCloseModal();
 	};
 
 	useEffect(() => {
@@ -82,9 +89,13 @@ function App() {
 			});
 	}, [currentTemperatureUnit]);
 	useEffect(() => {
-		getItems().then((data) => {
-			setClothingItems(data);
-		});
+		getItems()
+			.then((data) => {
+				setClothingItems(data);
+			})
+			.catch((data) => {
+				console.error(data);
+			});
 	}, []);
 
 	useEffect(() => {
@@ -109,6 +120,7 @@ function App() {
 							weatherTemp={temp}
 							onSelectCard={handleSelectedCard}
 							clothingItems={clothingItems}
+							currentTemperatureUnit={currentTemperatureUnit}
 						/>
 					</Route>
 					<Route exact path="/profile">
@@ -126,7 +138,8 @@ function App() {
 							onCloseModal={handleCloseModal}
 							onClickout={handleClickout}
 							onAddItem={handleAddItemSubmit}
-						></AddItemModal>
+							isLoading={isLoading}
+						/>
 					)}
 					{activeModal === "preview" && (
 						<ItemModal
@@ -134,6 +147,7 @@ function App() {
 							onClose={handleCloseModal}
 							onClickout={handleClickout}
 							onDelete={handleDeleteItem}
+							isLoading={isLoading}
 						/>
 					)}
 				</CurrentTemperatureUnitContext.Provider>
