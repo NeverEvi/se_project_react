@@ -22,7 +22,10 @@ export const parseWeatherData = (data) => {
 	const temperature = main && main.temp;
 	return temperature;
 };
-
+export const parseWeatherType = (data) => {
+	const weatherType = data.weather[0].main;
+	return weatherType;
+};
 export const parseLocationData = (data) => {
 	const location = data.name;
 	return location;

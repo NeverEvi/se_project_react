@@ -12,6 +12,11 @@
 	font-size: 20px;
 	line-height: 24px;
 }
+.header__right {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 .header__logo {
 	display: flex;
 	gap: 24px;
@@ -22,6 +27,11 @@
 	gap: 20px;
 	height: 40px;
 	align-items: center;
+}
+.header__avatar-logo-image {
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
 }
 .header__button {
 	font-family: "Cabinet Grotesk";

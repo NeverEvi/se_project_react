@@ -22,8 +22,8 @@ function Profile({ cards, onSelectCard, onCreateModal }) {
 						</button>
 					</div>
 					<ClothesSection>
-						{cards.map((x) => (
-							<ItemCard item={x} onSelectCard={onSelectCard} key={x.id} />
+						{cards.map((x, i) => (
+							<ItemCard item={x} onSelectCard={onSelectCard} key={i} />
 						))}
 					</ClothesSection>
 				</section>

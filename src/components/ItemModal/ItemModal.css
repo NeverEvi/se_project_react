@@ -39,3 +39,6 @@
 	color: red;
 	margin: 0;
 }
+.modal__delete-item_hidden {
+	visibility: hidden;
+}

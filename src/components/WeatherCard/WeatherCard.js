@@ -17,7 +17,7 @@ import nightStorm from "../../images/Night/Storm.svg";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 const weatherOptions = [
-	{ url: daySun, day: true, type: "Sun" },
+	{ url: daySun, day: true, type: "Clear" },
 	{
 		url: dayCloud,
 		day: true,
@@ -43,7 +43,7 @@ const weatherOptions = [
 	{
 		url: nightMoon,
 		day: false,
-		type: "Moon",
+		type: "Clear",
 	},
 	{
 		url: nightCloud,
@@ -75,7 +75,7 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
 	const imgSrc = weatherOptions.filter((i) => {
 		return i.day === day && i.type === type;
 	});
-	const imgSrcUrl = imgSrc[0].url || "";
+	const imgSrcUrl = imgSrc[0]?.url || "";
 	const imgSrcType = imgSrc[0].type || "Weather";
 
 	return (
@@ -85,5 +85,4 @@ const WeatherCard = ({ day, type, weatherTemp }) => {
 		</section>
 	);
 };
-
 export default WeatherCard;
