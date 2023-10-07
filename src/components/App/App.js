@@ -7,6 +7,8 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import RegisterModal from "../ResisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+
 import { checkToken, signIn, signUp } from "../../utils/auth";
 //import ItemCard from "../ItemCard/ItemCard";
 import { React, useState, useEffect } from "react";
@@ -25,7 +27,7 @@ function App() {
 	const [activeModal, setActiveModal] = useState("");
 	const [selectedCard, setSelectedCard] = useState({});
 	const [temp, setTemp] = useState(0);
-	const [weatherType, setWeatherType] = useState("FUCK");
+	const [weatherType, setWeatherType] = useState("Clear");
 	const [location, setLocation] = useState("");
 	const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 	const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +45,9 @@ function App() {
 	const handleLoginModal = () => {
 		setActiveModal("login");
 	};
+	const handleEditProfileModal = () => {
+		setActiveModal("edit-profile");
+	};
 	const handleCloseModal = () => {
 		setActiveModal("");
 	};
@@ -56,7 +61,6 @@ function App() {
 	const handleSelectedCard = (card) => {
 		setActiveModal("preview");
 		setSelectedCard(card);
-		console.log(card);
 	};
 	const handleToggleSwitchChange = () => {
 		currentTemperatureUnit === "F"
@@ -70,9 +74,6 @@ function App() {
 				setUser(decoded); //setUser(decoded.data);
 				setActiveModal("");
 				setToken(token);
-				console.log("Token: ", token);
-				console.log("Data: ", decoded);
-				console.log("User: ", user);
 			})
 			.catch((error) => {
 				console.error("Error checking token:", error);
@@ -86,7 +87,8 @@ function App() {
 		setIsLoading(true);
 		setItems({ name, imageUrl, weather }, token)
 			.then((res) => {
-				setClothingItems([res, ...clothingItems]);
+				//res = {data: {}}
+				setClothingItems([res.data, ...clothingItems]);
 				handleCloseModal();
 			})
 			.catch((err) => console.log(err))
@@ -98,7 +100,6 @@ function App() {
 		const password = data.password;
 		const email = data.email;
 		setIsLoading(true);
-		console.log({ name, avatarUrl, password, email });
 		signUp({ name, avatarUrl, password, email })
 			.then((res) => {
 				handleLoginSubmit({ email, password });
@@ -109,41 +110,29 @@ function App() {
 	};
 
 	const handleLoginSubmit = ({ email, password }) => {
-		console.log("Login initiated...");
-		console.log("Login (React) App.js: ", email);
-		console.log("Login (React) App.js: ", password);
 		signIn({ email, password })
 			.then((res) => {
-				console.log(res);
-
 				if (res && res.token) {
 					localStorage.setItem("jwt", res.token);
 					isReloading(res.token);
 				} else {
 					new Error(res.message || "Invalid credentials");
 				}
-				console.log(res);
 				return res;
 			})
 			.then((res) => {
 				setUser(res);
 				setLoggedIn(true);
-				console.log(res);
 			})
 			.catch((err) => console.error(err));
 	};
 
 	const handleDeleteItem = (e) => {
-		console.log("EVENT: ", e);
-		console.log("EVENT TARGET: ", e.target);
-		console.log("TARGET id: ", e.target.id);
-		removeItems(e.target.id)
+		removeItems(e.target.id, token)
 			.then(() => {
 				const newItemList = clothingItems.filter((item) => {
-					console.log(item.id);
-					return item.id != e.target.id;
+					return item._id != e.target.id;
 				});
-				console.log(newItemList);
 				setClothingItems(newItemList);
 				handleCloseModal();
 			})
@@ -156,14 +145,23 @@ function App() {
 				const location = data && data.name;
 				setLocation(location);
 				const temperature = parseWeatherData(data);
-				const wType = parseWeatherType(data);
 				setTemp(temperature);
-				setWeatherType(wType);
 			})
 			.catch((data) => {
 				console.error(data);
 			});
 	}, [currentTemperatureUnit]);
+
+	/*useEffect(() => {
+		getForecastWeather(APIkey)
+			.then((data) => {
+				const wType = parseWeatherType(data)
+				setWeatherType(wType);
+			})
+			.catch((data) => {
+				console.error(data);
+			});
+	}, []);*/
 
 	useEffect(() => {
 		getItems()
@@ -210,6 +208,7 @@ function App() {
 									onSelectCard={handleSelectedCard}
 									onCreateModal={handleCreateModal}
 									onClickout={handleClickout}
+									onEditProfileModal={handleEditProfileModal}
 								/>
 							</Route>
 							<Route path="/">
@@ -255,6 +254,14 @@ function App() {
 								onClickout={handleClickout}
 								isLoading={isLoading}
 								onLogin={handleLoginSubmit}
+							/>
+						)}
+						{activeModal === "edit-profile" && (
+							<EditProfileModal
+								onCloseModal={handleCloseModal}
+								onClickout={handleClickout}
+								isLoading={isLoading}
+								//onSubmit={handleLoginSubmit}
 							/>
 						)}
 					</CurrentTemperatureUnitContext.Provider>

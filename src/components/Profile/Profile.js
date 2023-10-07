@@ -1,13 +1,21 @@
 import "./Profile.css";
-import { React } from "react";
+//import { React } from "react";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import ItemCard from "../ItemCard/ItemCard";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import React, { useContext } from "react";
 
-function Profile({ cards, onSelectCard, onCreateModal }) {
+function Profile({ cards, onSelectCard, onCreateModal, onEditProfileModal }) {
+	const { user } = useContext(CurrentUserContext);
+
+	const filteredCards = cards.filter((item) => {
+		return item.owner === user._id;
+	});
+
 	return (
 		<div className="profile">
-			<SideBar />
+			<SideBar onEditProfileModal={onEditProfileModal} />
 
 			<div className="profile-clothes">
 				<section className="card_section card_items-profile">
@@ -22,7 +30,7 @@ function Profile({ cards, onSelectCard, onCreateModal }) {
 						</button>
 					</div>
 					<ClothesSection>
-						{cards.map((x, i) => (
+						{filteredCards.map((x, i) => (
 							<ItemCard item={x} onSelectCard={onSelectCard} key={i} />
 						))}
 					</ClothesSection>

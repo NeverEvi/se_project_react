@@ -1,10 +1,12 @@
 .app {
 	background-color: #f3f3f3;
 }
+
 .inputField {
 	border-width: 0 0 1px 0;
 	width: 440px;
 }
+
 .radioGroup {
 	margin-bottom: 34px;
 }

@@ -28,10 +28,13 @@ export const setItems = ({ name, imageUrl, weather }, token) => {
 	}).then(getResponse);
 	return newItem;
 };
-export const removeItems = (id) => {
+export const removeItems = (id, token) => {
 	const removed = fetch(`${baseUrl}/items/${id}`, {
 		method: "DELETE",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			authorization: `Bearer ${token}`,
+		},
 	}).then(getResponse);
 	return removed;
 };

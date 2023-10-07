@@ -28,7 +28,7 @@ function Main({
 		<main className="main">
 			<WeatherCard
 				day={true}
-				type="Clear"
+				type={weatherType}
 				weatherTemp={temps[currentTemperatureUnit]}
 			/>
 			<section className="card_section" id="card-section">

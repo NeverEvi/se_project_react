@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-function SideBar() {
+function SideBar({ onEditProfileModal }) {
 	const { user } = useContext(CurrentUserContext);
 	return (
 		<div className="profile-sidebar">
@@ -17,7 +17,14 @@ function SideBar() {
 				{user?.name}
 			</div>
 			<div className="profile-sidebar-links">
-				<p>Change profile data</p>
+				<button
+					type="text"
+					onClick={onEditProfileModal}
+					className="header__button"
+				>
+					Change profile data
+				</button>
+
 				<p>Log out</p>
 			</div>
 		</div>

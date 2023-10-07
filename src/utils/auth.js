@@ -1,7 +1,6 @@
 const baseUrl = "http://localhost:3001";
 
 const getResponse = (res) => {
-	console.log(res);
 	if (res.ok) {
 		return res.json();
 	}
@@ -19,7 +18,6 @@ export const signUp = ({ name, avatar, email, password }) => {
 };
 
 export const signIn = ({ email, password }) => {
-	console.log("Attempting to LOG IN");
 	return fetch(`${baseUrl}/signin`, {
 		method: "POST",
 		headers: {
