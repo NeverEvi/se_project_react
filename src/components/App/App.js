@@ -84,7 +84,7 @@ function App() {
 		const imageUrl = data.garmentPhotoURL;
 		const weather = data.garmentWeather;
 		setIsLoading(true);
-		setItems({ name, imageUrl, weather })
+		setItems({ name, imageUrl, weather }, token)
 			.then((res) => {
 				setClothingItems([res, ...clothingItems]);
 				handleCloseModal();

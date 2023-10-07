@@ -13,10 +13,13 @@ export const getItems = () => {
 	const itemsApi = fetch(`${baseUrl}/items`).then(getResponse);
 	return itemsApi;
 };
-export const setItems = ({ name, imageUrl, weather }) => {
+export const setItems = ({ name, imageUrl, weather }, token) => {
 	const newItem = fetch(`${baseUrl}/items`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			authorization: `Bearer ${token}`,
+		},
 		body: JSON.stringify({
 			name,
 			imageUrl,
