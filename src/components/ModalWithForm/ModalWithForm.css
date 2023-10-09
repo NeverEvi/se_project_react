@@ -19,10 +19,10 @@
 	width: 440px;
 	height: 380px;
 	border-radius: 20px;
-	padding: 0 28px 28px 28px;
+	padding: 28px 28px 28px 28px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-evenly;
 }
 .submitButton {
 	width: 124px;
@@ -42,4 +42,11 @@
 }
 .modal__title {
 	margin-top: 0px;
+}
+
+.modal_type_edit-profile {
+	height: 304px;
+}
+.modal_type_LogIn {
+	height: 304px;
 }

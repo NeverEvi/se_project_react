@@ -26,6 +26,19 @@ export const signIn = ({ email, password }) => {
 		body: JSON.stringify({ email, password }),
 	}).then(getResponse);
 };
+
+export const editProfile = ({ name, avatarUrl }) => {
+	const avatar = avatarUrl;
+	return fetch(`${baseUrl}/users/me`, {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+			authorization: `Bearer ${localStorage.getItem("jwt")}`,
+		},
+		body: JSON.stringify({ name, avatar }),
+	}).then(getResponse);
+};
+
 export const checkToken = (token) => {
 	return fetch(`${baseUrl}/users/me`, {
 		method: "GET",

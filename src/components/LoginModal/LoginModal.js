@@ -1,5 +1,4 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import "./LoginModal.css";
@@ -39,8 +38,9 @@ const LoginModal = ({
 				onClickout={onClickout}
 				onClose={onCloseModal}
 				buttonText="Log In"
-				name="LogIn"
+				modalName="LogIn"
 				title="Log In"
+				extra={<p>or Register</p>}
 			>
 				<label className="form-input">
 					Email*

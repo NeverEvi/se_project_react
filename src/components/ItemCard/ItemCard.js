@@ -1,5 +1,10 @@
 import "./ItemCard.css";
-const ItemCard = ({ item, onSelectCard }) => {
+import likeEmpty from "../../images/like-empty.png";
+//import like from "../../images/like.png";
+//import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import React /*, { useContext }*/ from "react";
+
+const ItemCard = ({ item, onSelectCard, loggedIn }) => {
 	return (
 		<div key={item.imageUrl}>
 			<div>
@@ -10,7 +15,18 @@ const ItemCard = ({ item, onSelectCard }) => {
 					onClick={() => onSelectCard(item)}
 				/>
 			</div>
-			<div className="card_name">{item.name}</div>
+			<div className="card_info">
+				<div className="card_name">{item.name}</div>
+				{loggedIn ? (
+					<img
+						src={likeEmpty}
+						alt="like"
+						//onClick={onCardLike}
+					/>
+				) : (
+					<img src={null} />
+				)}
+			</div>
 		</div>
 	);
 };

@@ -2,9 +2,8 @@ import "./SideBar.css";
 import profileLogo from "../../images/Ellipse 18.svg";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 
-function SideBar({ onEditProfileModal }) {
+function SideBar({ onEditProfileModal, onLogout }) {
 	const { user } = useContext(CurrentUserContext);
 	return (
 		<div className="profile-sidebar">
@@ -24,8 +23,9 @@ function SideBar({ onEditProfileModal }) {
 				>
 					Change profile data
 				</button>
-
-				<p>Log out</p>
+				<button type="text" onClick={onLogout} className="header__button">
+					Log out
+				</button>
 			</div>
 		</div>
 	);

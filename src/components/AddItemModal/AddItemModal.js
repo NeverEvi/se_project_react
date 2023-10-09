@@ -1,6 +1,8 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 import { useEffect } from "react";
+import "./AddItemModal.css";
+
 // onAddItem refers to handleAddItemSubmit, which is declared in App.js
 const AddItemModal = ({
 	isOpen,
@@ -42,6 +44,7 @@ const AddItemModal = ({
 			onClickout={onClickout}
 			handleSubmit={handleSubmit}
 			isLoading={isLoading}
+			modalName="newGarment"
 		>
 			<label>
 				Name
@@ -54,6 +57,7 @@ const AddItemModal = ({
 					maxLength="36"
 					onChange={handleGarmentName}
 					value={garmentName}
+					placeholder="Name"
 				/>
 			</label>
 			<br />
@@ -67,6 +71,7 @@ const AddItemModal = ({
 					minLength="5"
 					onChange={handleGarmentPhotoURL}
 					value={garmentPhotoURL}
+					placeholder="Image URL"
 				/>
 			</label>
 			<p>Select the weather type:</p>

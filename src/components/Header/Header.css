@@ -3,7 +3,7 @@
 	justify-content: space-between;
 	align-items: center;
 	min-height: 40px;
-	max-width: 1360px;
+	max-width: 2500px;
 	padding: 10px 40px 0 40px;
 	margin-bottom: 28px;
 	font-family: "Cabinet Grotesk";
@@ -15,12 +15,13 @@
 .header__right {
 	display: flex;
 	justify-content: space-between;
+	gap: 20px;
 	align-items: center;
 }
 .header__logo {
 	display: flex;
 	gap: 24px;
-	align-items: center;
+	align-items: flex-end;
 }
 .header__avatar-logo {
 	display: flex;
@@ -41,7 +42,9 @@
 	line-height: 24px;
 	background-color: #f3f3f3;
 	border: none;
+	text-decoration: none;
 	cursor: pointer;
+	color: black;
 }
 .header__temp-toggle-button {
 	border-radius: 10px;

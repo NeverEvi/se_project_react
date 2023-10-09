@@ -12,7 +12,6 @@ const Header = ({
 	onLoginModal,
 	loc,
 	loggedIn,
-	userName,
 }) => {
 	const currentDate = new Date().toLocaleString("default", {
 		month: "long",
@@ -47,7 +46,9 @@ const Header = ({
 							</button>
 						</div>
 						<div>
-							<Link to="/profile">{user?.name}</Link>
+							<Link className="header__button" to="/profile">
+								{user?.name}
+							</Link>
 						</div>
 						<div>
 							<img

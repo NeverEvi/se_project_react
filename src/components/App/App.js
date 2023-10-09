@@ -9,7 +9,7 @@ import RegisterModal from "../ResisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
-import { checkToken, signIn, signUp } from "../../utils/auth";
+import { checkToken, editProfile, signIn, signUp } from "../../utils/auth";
 //import ItemCard from "../ItemCard/ItemCard";
 import { React, useState, useEffect } from "react";
 import { Route, BrowserRouter, Redirect, Switch } from "react-router-dom";
@@ -18,16 +18,15 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import {
 	getForecastWeather,
 	parseWeatherData,
-	parseWeatherType,
 	APIkey,
 } from "../../utils/weatherApi";
 import { getItems, setItems, removeItems } from "../../utils/api";
-//import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+
 function App() {
 	const [activeModal, setActiveModal] = useState("");
 	const [selectedCard, setSelectedCard] = useState({});
 	const [temp, setTemp] = useState(0);
-	const [weatherType, setWeatherType] = useState("Clear");
+	//const [weatherType, setWeatherType] = useState("Clear");
 	const [location, setLocation] = useState("");
 	const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 	const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +34,39 @@ function App() {
 	const [user, setUser] = useState({});
 	const [clothingItems, setClothingItems] = useState([]);
 	const [loggedIn, setLoggedIn] = useState(false);
+	/////////////////////////////////////////////////////////
+	//                   LIKE HANDLER                      //
+	/////////////////////////////////////////////////////////
+	/*
+	const handleLikeClick = ({ id, isLiked, user }) => {
+		const token = localStorage.getItem("jwt");
+		// Check if this card is now liked
+		isLiked
+			? // if so, send a request to add the user's id to the card's likes array
+			  api
+					// the first argument is the card's id
+					.addCardLike(id, token)
+					.then((updatedCard) => {
+						setClothingItems((cards) =>
+							cards.map((c) => (c._id === id ? updatedCard : c))
+						);
+					})
+					.catch((err) => console.log(err))
+			: // if not, send a request to remove the user's id from the card's likes array
+			  api
+					// the first argument is the card's id
+					.removeCardLike(id, token)
+					.then((updatedCard) => {
+						setClothingItems((cards) =>
+							cards.map((c) => (c._id === id ? updatedCard : c))
+						);
+					})
+					.catch((err) => console.log(err));
+	};
+*/
+	/////////////////////////////////////////////////////////
+	//                  MODAL HANDLERS                     //
+	/////////////////////////////////////////////////////////
 
 	const handleCreateModal = () => {
 		setActiveModal("create");
@@ -48,26 +80,29 @@ function App() {
 	const handleEditProfileModal = () => {
 		setActiveModal("edit-profile");
 	};
+	const handleSelectedCard = (card) => {
+		if (loggedIn) {
+			setActiveModal("preview");
+			setSelectedCard(card);
+		}
+	};
 	const handleCloseModal = () => {
 		setActiveModal("");
 	};
-
 	const handleClickout = (evt) => {
 		if (evt.currentTarget !== evt.target) {
 			return;
 		}
 		setActiveModal("");
 	};
-	const handleSelectedCard = (card) => {
-		setActiveModal("preview");
-		setSelectedCard(card);
-	};
+
+	/////////////////////////////////////////////////////////
+
 	const handleToggleSwitchChange = () => {
 		currentTemperatureUnit === "F"
 			? setCurrentTemperatureUnit("C")
 			: setCurrentTemperatureUnit("F");
 	};
-
 	const isReloading = (token) => {
 		checkToken(token)
 			.then((decoded) => {
@@ -79,6 +114,10 @@ function App() {
 				console.error("Error checking token:", error);
 			});
 	};
+
+	/////////////////////////////////////////////////////////
+	//             SUBMIT FORM HANDLERS                    //
+	/////////////////////////////////////////////////////////
 
 	const handleAddItemSubmit = (data) => {
 		const name = data.garmentName;
@@ -126,7 +165,19 @@ function App() {
 			})
 			.catch((err) => console.error(err));
 	};
-
+	const handleLogoutSubmit = () => {
+		localStorage.removeItem("jwt");
+		setUser({});
+		setLoggedIn(false);
+	};
+	const handleEditProfileSubmit = ({ name, avatarUrl }) => {
+		editProfile({ name, avatarUrl })
+			.then((res) => {
+				setUser(res);
+				handleCloseModal();
+			})
+			.catch((err) => console.error(err));
+	};
 	const handleDeleteItem = (e) => {
 		removeItems(e.target.id, token)
 			.then(() => {
@@ -138,6 +189,10 @@ function App() {
 			})
 			.catch((err) => console.error(err));
 	};
+
+	/////////////////////////////////////////////////////////
+	//              useEffect Hooks                        //
+	/////////////////////////////////////////////////////////
 
 	useEffect(() => {
 		getForecastWeather(APIkey)
@@ -182,6 +237,10 @@ function App() {
 		document.addEventListener("keydown", closeByEscape);
 		return () => document.removeEventListener("keydown", closeByEscape);
 	}, []);
+
+	/////////////////////////////////////////////////////////
+	//                   RETURN: APP                       //
+	/////////////////////////////////////////////////////////
 	return (
 		<BrowserRouter>
 			<CurrentUserContext.Provider value={user}>
@@ -209,20 +268,25 @@ function App() {
 									onCreateModal={handleCreateModal}
 									onClickout={handleClickout}
 									onEditProfileModal={handleEditProfileModal}
+									onLogout={handleLogoutSubmit}
+									loggedIn={loggedIn}
 								/>
 							</Route>
 							<Route path="/">
 								{loggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
 								<Main
 									weatherTemp={temp}
-									weatherType={weatherType}
+									weatherType="Clear"
 									onSelectCard={handleSelectedCard}
 									clothingItems={clothingItems}
+									loggedIn={loggedIn}
+									//onCardLike={handleCardLike}
 									currentTemperatureUnit={currentTemperatureUnit}
 								/>
 							</Route>
 						</Switch>
 						<Footer />
+
 						{activeModal === "create" && (
 							<AddItemModal
 								onCloseModal={handleCloseModal}
@@ -261,7 +325,7 @@ function App() {
 								onCloseModal={handleCloseModal}
 								onClickout={handleClickout}
 								isLoading={isLoading}
-								//onSubmit={handleLoginSubmit}
+								onSubmit={handleEditProfileSubmit}
 							/>
 						)}
 					</CurrentTemperatureUnitContext.Provider>

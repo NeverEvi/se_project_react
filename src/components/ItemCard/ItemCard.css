@@ -1,14 +1,21 @@
 .card_section {
 	margin-top: 20px;
 }
-.card_name {
+.card_info {
+	display: flex;
+	justify-content: space-around;
 	text-align: center;
 	position: relative;
+	text-wrap: nowrap;
 	bottom: 325px;
 	left: 115px;
-	background-color: white;
 	width: 91px;
-	border-radius: 5px;
+}
+.card_name {
+	background-color: white;
+	border-radius: 4px;
+	padding: 1px 6px;
+	margin: 0 3px 0 0;
 }
 .card_image {
 	width: 328px;

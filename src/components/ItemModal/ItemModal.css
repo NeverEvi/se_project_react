@@ -27,6 +27,8 @@
 
 .modal__info {
 	padding: 0 32px;
+	line-height: 24px;
+	font-size: 20px;
 }
 .modal__info-name {
 	display: flex;

@@ -10,6 +10,8 @@ function Main({
 	onSelectCard,
 	clothingItems,
 	currentTemperatureUnit,
+	onCardLike,
+	loggedIn,
 }) {
 	const weatherCategory = useMemo(() => {
 		if (weatherTemp >= 75) return "hot";
@@ -23,7 +25,6 @@ function Main({
 	const filteredCards = clothingItems.filter((item) => {
 		return item.weather === weatherCategory;
 	});
-
 	return (
 		<main className="main">
 			<WeatherCard
@@ -35,7 +36,12 @@ function Main({
 				<p>Today is {temps[currentTemperatureUnit]} / You may want to wear: </p>
 				<ClothesSection>
 					{filteredCards.map((x, i) => (
-						<ItemCard item={x} onSelectCard={onSelectCard} key={i} />
+						<ItemCard
+							item={x}
+							onSelectCard={onSelectCard}
+							loggedIn={loggedIn}
+							key={i}
+						/>
 					))}
 				</ClothesSection>
 			</section>
