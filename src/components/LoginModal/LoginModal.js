@@ -10,6 +10,7 @@ const LoginModal = ({
 	onCloseModal,
 	onClickout,
 	isLoading,
+	onSwitchRegisterLogin,
 }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -40,7 +41,7 @@ const LoginModal = ({
 				buttonText="Log In"
 				modalName="LogIn"
 				title="Log In"
-				extra={<p>or Register</p>}
+				extra={<p onClick={onSwitchRegisterLogin}>or Register</p>}
 			>
 				<label className="form-input">
 					Email*

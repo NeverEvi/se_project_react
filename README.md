@@ -1,3 +1,11 @@
+# WTWR
+
+Backend: [https://github.com/NeverEvi/se_project_express](https://github.com/NeverEvi/se_project_express)
+
+WTWR is a weather app that provides personalized clothing suggestions based on the current temperature.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

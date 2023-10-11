@@ -20,7 +20,13 @@ import {
 	parseWeatherData,
 	APIkey,
 } from "../../utils/weatherApi";
-import { getItems, setItems, removeItems } from "../../utils/api";
+import {
+	getItems,
+	setItems,
+	removeItems,
+	addCardLike,
+	removeCardLike,
+} from "../../utils/api";
 
 function App() {
 	const [activeModal, setActiveModal] = useState("");
@@ -37,33 +43,32 @@ function App() {
 	/////////////////////////////////////////////////////////
 	//                   LIKE HANDLER                      //
 	/////////////////////////////////////////////////////////
-	/*
-	const handleLikeClick = ({ id, isLiked, user }) => {
+
+	const handleCardLike = (id, isLiked, user) => {
 		const token = localStorage.getItem("jwt");
 		// Check if this card is now liked
-		isLiked
+		!isLiked
 			? // if so, send a request to add the user's id to the card's likes array
-			  api
-					// the first argument is the card's id
-					.addCardLike(id, token)
+
+			  // the first argument is the card's id
+			  addCardLike(id, user, token)
 					.then((updatedCard) => {
 						setClothingItems((cards) =>
-							cards.map((c) => (c._id === id ? updatedCard : c))
+							cards.map((c) => (c._id === id ? updatedCard.data : c))
 						);
 					})
 					.catch((err) => console.log(err))
 			: // if not, send a request to remove the user's id from the card's likes array
-			  api
-					// the first argument is the card's id
-					.removeCardLike(id, token)
+
+			  // the first argument is the card's id
+			  removeCardLike(id, user, token)
 					.then((updatedCard) => {
 						setClothingItems((cards) =>
-							cards.map((c) => (c._id === id ? updatedCard : c))
+							cards.map((c) => (c._id === id ? updatedCard.item : c))
 						);
 					})
 					.catch((err) => console.log(err));
 	};
-*/
 	/////////////////////////////////////////////////////////
 	//                  MODAL HANDLERS                     //
 	/////////////////////////////////////////////////////////
@@ -270,6 +275,7 @@ function App() {
 									onEditProfileModal={handleEditProfileModal}
 									onLogout={handleLogoutSubmit}
 									loggedIn={loggedIn}
+									onCardLike={handleCardLike}
 								/>
 							</Route>
 							<Route path="/">
@@ -280,7 +286,7 @@ function App() {
 									onSelectCard={handleSelectedCard}
 									clothingItems={clothingItems}
 									loggedIn={loggedIn}
-									//onCardLike={handleCardLike}
+									onCardLike={handleCardLike}
 									currentTemperatureUnit={currentTemperatureUnit}
 								/>
 							</Route>
@@ -310,6 +316,7 @@ function App() {
 								onClickout={handleClickout}
 								isLoading={isLoading}
 								onRegister={handleRegisterSubmit}
+								onSwitchRegisterLogin={handleLoginModal}
 							/>
 						)}
 						{activeModal === "login" && (
@@ -318,6 +325,7 @@ function App() {
 								onClickout={handleClickout}
 								isLoading={isLoading}
 								onLogin={handleLoginSubmit}
+								onSwitchRegisterLogin={handleRegisterModal}
 							/>
 						)}
 						{activeModal === "edit-profile" && (

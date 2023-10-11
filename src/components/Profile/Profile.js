@@ -13,6 +13,7 @@ function Profile({
 	onEditProfileModal,
 	onLogout,
 	loggedIn,
+	onCardLike,
 }) {
 	const { user } = useContext(CurrentUserContext);
 
@@ -45,6 +46,7 @@ function Profile({
 								loggedIn={loggedIn}
 								onSelectCard={onSelectCard}
 								key={i}
+								onLikeClick={onCardLike}
 							/>
 						))}
 					</ClothesSection>

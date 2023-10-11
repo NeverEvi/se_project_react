@@ -14,8 +14,9 @@
 .card_name {
 	background-color: white;
 	border-radius: 4px;
-	padding: 1px 6px;
+	padding: 1px 6px 0 6px;
 	margin: 0 3px 0 0;
+	line-height: 24px;
 }
 .card_image {
 	width: 328px;
@@ -28,4 +29,8 @@
 	gap: 20px;
 	justify-content: center;
 	margin-top: 20px;
+}
+.card_like-button {
+	background: transparent;
+	border: none;
 }

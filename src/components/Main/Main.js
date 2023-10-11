@@ -41,6 +41,7 @@ function Main({
 							onSelectCard={onSelectCard}
 							loggedIn={loggedIn}
 							key={i}
+							onLikeClick={onCardLike}
 						/>
 					))}
 				</ClothesSection>
