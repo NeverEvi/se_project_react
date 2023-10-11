@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 
 const ItemModal = ({ selectedCard, onClose, onClickout, onDelete }) => {
 	const { user } = useContext(CurrentUserContext);
-	const isOwn = selectedCard.owner === user._id;
+	const isOwn = selectedCard.owner === user?._id;
 	const deleteButtonClassName = `modal__delete-item ${
 		!isOwn && "modal__delete-item_hidden"
 	}`;

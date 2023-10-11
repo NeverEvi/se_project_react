@@ -5,14 +5,14 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
-import RegisterModal from "../ResisterModal/RegisterModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 import { checkToken, editProfile, signIn, signUp } from "../../utils/auth";
-//import ItemCard from "../ItemCard/ItemCard";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { React, useState, useEffect } from "react";
-import { Route, BrowserRouter, Redirect, Switch } from "react-router-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import {
@@ -86,10 +86,8 @@ function App() {
 		setActiveModal("edit-profile");
 	};
 	const handleSelectedCard = (card) => {
-		if (loggedIn) {
-			setActiveModal("preview");
-			setSelectedCard(card);
-		}
+		setActiveModal("preview");
+		setSelectedCard(card);
 	};
 	const handleCloseModal = () => {
 		setActiveModal("");
@@ -98,7 +96,7 @@ function App() {
 		if (evt.currentTarget !== evt.target) {
 			return;
 		}
-		setActiveModal("");
+		handleCloseModal();
 	};
 
 	/////////////////////////////////////////////////////////
@@ -112,7 +110,7 @@ function App() {
 		checkToken(token)
 			.then((decoded) => {
 				setUser(decoded); //setUser(decoded.data);
-				setActiveModal("");
+				handleCloseModal();
 				setToken(token);
 			})
 			.catch((error) => {
@@ -154,6 +152,7 @@ function App() {
 	};
 
 	const handleLoginSubmit = ({ email, password }) => {
+		setIsLoading(true);
 		signIn({ email, password })
 			.then((res) => {
 				if (res && res.token) {
@@ -168,7 +167,8 @@ function App() {
 				setUser(res);
 				setLoggedIn(true);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => console.error(err))
+			.finally(() => setIsLoading(false));
 	};
 	const handleLogoutSubmit = () => {
 		localStorage.removeItem("jwt");
@@ -176,14 +176,17 @@ function App() {
 		setLoggedIn(false);
 	};
 	const handleEditProfileSubmit = ({ name, avatarUrl }) => {
+		setIsLoading(true);
 		editProfile({ name, avatarUrl })
 			.then((res) => {
 				setUser(res);
 				handleCloseModal();
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => console.error(err))
+			.finally(() => setIsLoading(false));
 	};
 	const handleDeleteItem = (e) => {
+		setIsLoading(true);
 		removeItems(e.target.id, token)
 			.then(() => {
 				const newItemList = clothingItems.filter((item) => {
@@ -192,12 +195,35 @@ function App() {
 				setClothingItems(newItemList);
 				handleCloseModal();
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => console.error(err))
+			.finally(() => setIsLoading(false));
 	};
 
 	/////////////////////////////////////////////////////////
 	//              useEffect Hooks                        //
 	/////////////////////////////////////////////////////////
+	useEffect(() => {
+		const token = localStorage.getItem("jwt");
+
+		if (token) {
+			checkToken(token)
+				.then((data) => {
+					if (data) {
+						setLoggedIn(true);
+						setUser(data);
+						setToken(token);
+					} else {
+						localStorage.removeItem("jwt");
+						setLoggedIn(false);
+					}
+				})
+				.catch((error) => {
+					console.error("Failed to validate token:", error);
+					localStorage.removeItem("jwt");
+					setLoggedIn(false);
+				});
+		}
+	}, []);
 
 	useEffect(() => {
 		getForecastWeather(APIkey)
@@ -234,14 +260,16 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		const closeByEscape = (evt) => {
-			if (evt.key === "Escape") {
+		if (!activeModal) return;
+
+		const closeByEscape = (e) => {
+			if (e.key === "Escape") {
 				handleCloseModal();
 			}
 		};
 		document.addEventListener("keydown", closeByEscape);
 		return () => document.removeEventListener("keydown", closeByEscape);
-	}, []);
+	}, [activeModal]);
 
 	/////////////////////////////////////////////////////////
 	//                   RETURN: APP                       //
@@ -261,12 +289,7 @@ function App() {
 							loggedIn={loggedIn}
 						/>
 						<Switch>
-							<Route exact path="/profile">
-								{loggedIn ? (
-									<Redirect to="/profile" />
-								) : (
-									<Redirect to="/signup" />
-								)}
+							<ProtectedRoute exact path="/profile" loggedIn={loggedIn}>
 								<Profile
 									cards={clothingItems}
 									onSelectCard={handleSelectedCard}
@@ -277,9 +300,8 @@ function App() {
 									loggedIn={loggedIn}
 									onCardLike={handleCardLike}
 								/>
-							</Route>
+							</ProtectedRoute>
 							<Route path="/">
-								{loggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
 								<Main
 									weatherTemp={temp}
 									weatherType="Clear"
@@ -287,7 +309,7 @@ function App() {
 									clothingItems={clothingItems}
 									loggedIn={loggedIn}
 									onCardLike={handleCardLike}
-									currentTemperatureUnit={currentTemperatureUnit}
+									//currentTemperatureUnit={currentTemperatureUnit}
 								/>
 							</Route>
 						</Switch>

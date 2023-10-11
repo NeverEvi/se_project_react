@@ -13,10 +13,8 @@ const EditProfileModal = ({
 	const [name, setName] = useState("");
 	const [avatarUrl, setAvatarUrl] = useState("");
 	useEffect(() => {
-		if (isOpen === true) {
-			setName(`${user.name}`);
-			setAvatarUrl(`${user.avatar}`);
-		}
+		setName(`${user.name}`);
+		setAvatarUrl(`${user.avatar}`);
 	}, [isOpen]);
 
 	function handleSubmit(e) {
@@ -36,7 +34,7 @@ const EditProfileModal = ({
 				handleSubmit={handleSubmit}
 				onClickout={onClickout}
 				onClose={onCloseModal}
-				buttonText="Save changes"
+				buttonText={isLoading ? "Saving..." : "Save changes"}
 				modalName="edit-profile"
 				title="Change profile data"
 			>
@@ -50,8 +48,7 @@ const EditProfileModal = ({
 							name="name"
 							minLength="5"
 							onChange={handleName}
-							value={name}
-							placeholder={`${user.name}`}
+							defaultValue={`${user.name}`}
 						/>
 					</label>
 				</div>
@@ -65,8 +62,7 @@ const EditProfileModal = ({
 							name="avatarUrl"
 							minLength="5"
 							onChange={handleAvatarUrl}
-							value={avatarUrl}
-							placeholder={`${user.avatar}`}
+							defaultValue={`${user.avatar}`}
 						/>
 					</label>
 				</div>

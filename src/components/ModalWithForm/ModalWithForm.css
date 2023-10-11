@@ -50,3 +50,9 @@
 .modal_type_LogIn {
 	height: 304px;
 }
+.modal__form-buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	align-items: center;
+}

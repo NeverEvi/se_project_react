@@ -85,7 +85,7 @@ const AddItemModal = ({
 						name="RadioTemp"
 						onClick={handleGarmentWeather}
 					/>
-					<label>Hot</label>
+					<label htmlFor="hot">Hot</label>
 				</div>
 				<div>
 					<input
@@ -95,7 +95,7 @@ const AddItemModal = ({
 						name="RadioTemp"
 						onClick={handleGarmentWeather}
 					/>
-					<label>Warm</label>
+					<label htmlFor="warm">Warm</label>
 				</div>
 				<div>
 					<input
@@ -105,7 +105,7 @@ const AddItemModal = ({
 						name="RadioTemp"
 						onClick={handleGarmentWeather}
 					/>
-					<label>Cold</label>
+					<label htmlFor="cold">Cold</label>
 				</div>
 			</div>
 		</ModalWithForm>

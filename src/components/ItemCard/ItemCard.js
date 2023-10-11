@@ -8,7 +8,7 @@ const ItemCard = ({ item, onSelectCard, loggedIn, onLikeClick }) => {
 	const { user } = useContext(CurrentUserContext);
 	const isLiked = item.likes.some((id) => id === user?._id);
 	return (
-		<div key={item.imageUrl}>
+		<div>
 			<div>
 				<img
 					src={item.imageUrl}
@@ -30,9 +30,7 @@ const ItemCard = ({ item, onSelectCard, loggedIn, onLikeClick }) => {
 							//{onCardLike}
 						/>
 					</button>
-				) : (
-					<img src={null} />
-				)}
+				) : null}
 			</div>
 		</div>
 	);
