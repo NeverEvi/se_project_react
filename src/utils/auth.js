@@ -1,7 +1,7 @@
 import { request } from "./api";
 const baseUrl =
 	process.env.NODE_ENV === "production"
-		? "api.wtwr.strangled.net"
+		? "https://api.wtwr.strangled.net"
 		: "http://localhost:3001";
 
 export const signUp = ({ name, avatar, email, password }) => {

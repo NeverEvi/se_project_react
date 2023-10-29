@@ -1,6 +1,6 @@
 const baseUrl =
 	process.env.NODE_ENV === "production"
-		? "api.wtwr.strangled.net"
+		? "https://api.wtwr.strangled.net"
 		: "http://localhost:3001";
 
 export function request(url, options) {
