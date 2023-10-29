@@ -1,4 +1,7 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl =
+	process.env.NODE_ENV === "production"
+		? "api.wtwr.strangled.net"
+		: "http://localhost:3001";
 //const baseUrl = "https://my-json-server.typicode.com/NeverEvi/se_project_react";
 
 export function request(url, options) {
